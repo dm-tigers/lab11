@@ -1,0 +1,9 @@
+.\obj\main.o: main.c
+.\obj\main.o: C:\Keil_v5\ARM\ARMCC\bin\..\include\stdio.h
+.\obj\main.o: .\include\LPC17xx.H
+.\obj\main.o: .\include\core_cm3.h
+.\obj\main.o: C:\Keil_v5\ARM\ARMCC\bin\..\include\stdint.h
+.\obj\main.o: .\include\core_cmInstr.h
+.\obj\main.o: .\include\core_cmFunc.h
+.\obj\main.o: .\include\system_LPC17xx.h
+.\obj\main.o: .\include\Serial.h

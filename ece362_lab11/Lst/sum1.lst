@@ -1,0 +1,61 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; calculate the sum
+    2 00000000         ; Args:  R0 = starting address of 32-bit integer
+    3 00000000         ;        R1 = number of integers in the array
+    4 00000000         ; Return: R0 = sum of all integers
+    5 00000000         
+    6 00000000                 AREA             |.text|, CODE, READONLY
+    7 00000000         
+    8 00000000                 EXPORT           sum1
+    9 00000000         
+   10 00000000         sum1
+   11 00000000 EBA2 0202       SUB              R2, R2, R2  ; SUM = 0
+   12 00000004         START
+   13 00000004 F850 4B04       LDR              R4, [R0], #4
+   14 00000008 4422            ADD              R2, R2, R4
+   15 0000000A 1E49            SUBS             R1, R1, #1
+   16 0000000C D1FA            BNE              START
+   17 0000000E 4610            MOV              R0, R2
+   18 00000010 4770            BX               R14
+   19 00000012                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\Obj\su
+m1.d -o.\Obj\sum1.o -ID:\Keil\\ARM\RV31\Inc -ID:\Keil\\ARM\CMSIS\Include -ID:\K
+eil\\ARM\Inc\NXP\LPC17xx --predefine="__MICROLIB SETA 1" --list=.\Lst\sum1.lst 
+sum1.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 6 in file sum1.s
+   Uses
+      None
+Comment: .text unused
+START 00000004
+
+Symbol: START
+   Definitions
+      At line 12 in file sum1.s
+   Uses
+      At line 16 in file sum1.s
+Comment: START used once
+sum1 00000000
+
+Symbol: sum1
+   Definitions
+      At line 10 in file sum1.s
+   Uses
+      At line 8 in file sum1.s
+Comment: sum1 used once
+3 symbols
+334 symbols in table

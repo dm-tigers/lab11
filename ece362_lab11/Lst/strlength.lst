@@ -1,0 +1,60 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; calculate the length of string
+    2 00000000         ; Args:  R0 = starting address of 8-bit string
+    3 00000000         ; Return: R0 = length of this string
+    4 00000000         
+    5 00000000                 AREA             |.text|, CODE, READONLY
+    6 00000000         
+    7 00000000                 EXPORT           strlength
+    8 00000000         
+    9 00000000         strlength
+   10 00000000 EBA2 0202       SUB              R2, R2, R2  ; SUM = 0
+   11 00000004         START
+   12 00000004 F810 4B01       LDRB             R4, [R0], #1
+   13 00000008 1E24            SUBS             R4, R4, #0
+   14 0000000A BF18 1C52       ADDNE            R2, R2, #1
+   15 0000000E D1F9            BNE              START
+   16 00000010 4610            MOV              R0, R2
+   17 00000012 4770            BX               R14
+   18 00000014                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\Obj\st
+rlength.d -o.\Obj\strlength.o -ID:\Keil\\ARM\RV31\Inc -ID:\Keil\\ARM\CMSIS\Incl
+ude -ID:\Keil\\ARM\Inc\NXP\LPC17xx --predefine="__MICROLIB SETA 1" --list=.\Lst
+\strlength.lst strlength.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 5 in file strlength.s
+   Uses
+      None
+Comment: .text unused
+START 00000004
+
+Symbol: START
+   Definitions
+      At line 11 in file strlength.s
+   Uses
+      At line 15 in file strlength.s
+Comment: START used once
+strlength 00000000
+
+Symbol: strlength
+   Definitions
+      At line 9 in file strlength.s
+   Uses
+      At line 7 in file strlength.s
+Comment: strlength used once
+3 symbols
+334 symbols in table

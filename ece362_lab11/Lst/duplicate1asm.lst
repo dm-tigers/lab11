@@ -1,0 +1,65 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         ;  R0 = X[]
+    3 00000000         ;  R1 = N
+    4 00000000         ;  R2 = hash[]
+    5 00000000         
+    6 00000000         
+    7 00000000                 AREA             |.text|, CODE, READONLY
+    8 00000000         
+    9 00000000                 EXPORT           duplicate1asm
+   10 00000000         
+   11 00000000         duplicate1asm
+   12 00000000 F850 4B04       LDR              R4, [R0], #4 ; reading X[i] -> 
+                                                            R4
+   13 00000004 EA4F 06C4       MOV              R6, R4, LSL #3
+   14 00000008 F106 0604       ADD              R6,  R6, #4
+   15 0000000C 5995            LDR              R5, [R2,R6]
+   16 0000000E F105 0501       ADD              R5, R5, #1
+   17 00000012 5195            STR              R5, [R2, R6]
+   18 00000014 1E49            SUBS             R1, R1, #1
+   19 00000016 D1FE            BNE              duplicate1asm
+   20 00000018 4770    after   BX               LR
+   21 0000001A                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\obj\du
+plicate1asm.d -o.\obj\duplicate1asm.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSI
+S\Include -IC:\Keil\ARM\Inc\NXP\LPC17xx --predefine="__MICROLIB SETA 1" --list=
+.\lst\duplicate1asm.lst duplicate1asm.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 7 in file duplicate1asm.s
+   Uses
+      None
+Comment: .text unused
+after 00000018
+
+Symbol: after
+   Definitions
+      At line 20 in file duplicate1asm.s
+   Uses
+      None
+Comment: after unused
+duplicate1asm 00000000
+
+Symbol: duplicate1asm
+   Definitions
+      At line 11 in file duplicate1asm.s
+   Uses
+      At line 9 in file duplicate1asm.s
+      At line 19 in file duplicate1asm.s
+
+3 symbols
+334 symbols in table

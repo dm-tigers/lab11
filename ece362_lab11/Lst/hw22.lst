@@ -1,0 +1,103 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; homework 2 problem 2
+    2 00000000         
+    3 00000000                 AREA             |.text|, CODE, READONLY
+    4 00000000 00000010 
+                       MM      DCD              16
+    5 00000004 0000000A 
+                       NN      DCD              10
+    6 00000008 00000014 
+                       JJ      DCD              20
+    7 0000000C 00000032 
+                       CC      DCD              50
+    8 00000010                 EXPORT           hw22
+    9 00000010         
+   10 00000010         hw22
+   11 00000010 F2AF 000C       ADR              R0, JJ
+   12 00000014 F2AF 010C       ADR              R1, CC
+   13 00000018 6800            LDR              R0, [R0]
+   14 0000001A 6809            LDR              R1, [R1]
+   15 0000001C         
+   16 0000001C         
+   17 0000001C F2AF 0420       ADR              R4, MM
+   18 00000020 F2AF 0520       ADR              R5, NN
+   19 00000024         
+   20 00000024         
+   21 00000024         
+   22 00000024 6826            LDR              R6, [R4]
+   23 00000026 682F            LDR              R7, [R5]
+   24 00000028 EBA6 0607       SUB              R6, R6, R7
+   25 0000002C 2E0F            CMP              R6, #15
+   26 0000002E BFBB 1F43       SUBLT            R3, R0, #5
+   27 00000032 F04F 0800       MOVLT            R8, #0
+   28 00000036 F101 0312       ADDGE            R3, R1, #18
+   29 0000003A F04F 0801       MOVLT            R8, #1
+   30 0000003E 6013            STR              R3,[R2]
+   31 00000040 4640            MOV              R0, R8
+   32 00000042 4770            BX               LR
+   33 00000044                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\Obj\hw
+22.d -o.\Obj\hw22.o -ID:\Keil\\ARM\RV31\Inc -ID:\Keil\\ARM\CMSIS\Include -ID:\K
+eil\\ARM\Inc\NXP\LPC17xx --predefine="__MICROLIB SETA 1" --list=.\Lst\hw22.lst 
+hw22.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 3 in file hw22.s
+   Uses
+      None
+Comment: .text unused
+CC 0000000C
+
+Symbol: CC
+   Definitions
+      At line 7 in file hw22.s
+   Uses
+      At line 12 in file hw22.s
+Comment: CC used once
+JJ 00000008
+
+Symbol: JJ
+   Definitions
+      At line 6 in file hw22.s
+   Uses
+      At line 11 in file hw22.s
+Comment: JJ used once
+MM 00000000
+
+Symbol: MM
+   Definitions
+      At line 4 in file hw22.s
+   Uses
+      At line 17 in file hw22.s
+Comment: MM used once
+NN 00000004
+
+Symbol: NN
+   Definitions
+      At line 5 in file hw22.s
+   Uses
+      At line 18 in file hw22.s
+Comment: NN used once
+hw22 00000010
+
+Symbol: hw22
+   Definitions
+      At line 10 in file hw22.s
+   Uses
+      At line 8 in file hw22.s
+Comment: hw22 used once
+6 symbols
+337 symbols in table

@@ -1,0 +1,76 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         ;  Input:  R0, R1, R2, R3  Data from disk 0, 1, 2, and 3
+                       ; return point in stack
+    3 00000000         ;  Return: R0 - pointer to disk 4
+    4 00000000         
+    5 00000000                 AREA             |.text|, CODE, READONLY
+    6 00000000         
+    7 00000000                 EXPORT           raid5asm
+    8 00000000         
+    9 00000000         raid5asm
+   10 00000000 F04F 0910       MOV              R9, #16
+   11 00000004 F8DD 8000       LDR              R8, [R13]
+   12 00000008         start
+   13 00000008 F850 4B04       LDR              R4, [R0], #4
+   14 0000000C F851 5B04       LDR              R5, [R1], #4
+   15 00000010 F852 6B04       LDR              R6, [R2], #4
+   16 00000014 F853 7B04       LDR              R7, [R3], #4
+   17 00000018         
+   18 00000018 EA84 0405       EOR              R4, R4, R5
+   19 0000001C EA86 0607       EOR              R6, R6, R7
+   20 00000020 EA84 0406       EOR              R4, R4, R6
+   21 00000024 F848 4B04       STR              R4, [R8], #4
+   22 00000028 F1B9 0901       SUBS             R9,R9, #1
+   23 0000002C D1EC            BNE              start
+   24 0000002E 4770    after   BX               LR
+   25 00000030                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\obj\ra
+id5asm.d -o.\obj\raid5asm.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include 
+-IC:\Keil\ARM\Inc\NXP\LPC17xx --predefine="__MICROLIB SETA 1" --list=.\lst\raid
+5asm.lst raid5asm.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 5 in file raid5asm.s
+   Uses
+      None
+Comment: .text unused
+after 0000002E
+
+Symbol: after
+   Definitions
+      At line 24 in file raid5asm.s
+   Uses
+      None
+Comment: after unused
+raid5asm 00000000
+
+Symbol: raid5asm
+   Definitions
+      At line 9 in file raid5asm.s
+   Uses
+      At line 7 in file raid5asm.s
+Comment: raid5asm used once
+start 00000008
+
+Symbol: start
+   Definitions
+      At line 12 in file raid5asm.s
+   Uses
+      At line 23 in file raid5asm.s
+Comment: start used once
+4 symbols
+335 symbols in table

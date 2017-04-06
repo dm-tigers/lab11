@@ -1,0 +1,79 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; stringcmp.s 
+    2 00000000         ; Args:  R0 = starting address of string s1, R1 = starti
+                       ng address of string s2
+    3 00000000         ; Return: R0 = comparison results
+    4 00000000         
+    5 00000000                 AREA             |.text|, CODE, READONLY
+    6 00000000         
+    7 00000000                 EXPORT           stringcmp
+    8 00000000         
+    9 00000000         stringcmp
+   10 00000000 B530            PUSH             {r4-r5,lr}
+   11 00000002 7804    start   ldrb             r4, [r0]    ; reading *s1
+   12 00000004 780D            ldrb             r5, [r1]    ; reading *s2
+   13 00000006         
+   14 00000006 2C00            cmp              r4, #0
+   15 00000008 D008            beq              exit1       ; *s1 = '\0' exit1
+   16 0000000A 2D00            cmp              r5, #0
+   17 0000000C D006            beq              exit1       ; *s2 = 0, exit1
+   18 0000000E 42AC            cmp              r4,r5
+   19 00000010 D104            bne              exit1
+   20 00000012 F100 0001       add              r0,r0,#1
+   21 00000016 F101 0101       add              r1,r1,#1
+   22 0000001A E7F2            b                start
+   23 0000001C EBA4 0005 
+                       exit1   sub              r0, r4,r5   ; *s1 - *s2
+   24 00000020 BD30            pop              {r4-r5,pc}
+   25 00000022                 end
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\obj\st
+ringcmp.d -o.\obj\stringcmp.o -IC:\Keil_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\PACK\A
+RM\CMSIS\3.20.4\CMSIS\Include -IC:\Keil_v5\ARM\Inc\NXP\LPC17xx --predefine="__E
+VAL SETA 1" --list=.\lst\stringcmp.lst source\stringcmp.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 5 in file source\stringcmp.s
+   Uses
+      None
+Comment: .text unused
+exit1 0000001C
+
+Symbol: exit1
+   Definitions
+      At line 23 in file source\stringcmp.s
+   Uses
+      At line 15 in file source\stringcmp.s
+      At line 17 in file source\stringcmp.s
+      At line 19 in file source\stringcmp.s
+
+start 00000002
+
+Symbol: start
+   Definitions
+      At line 11 in file source\stringcmp.s
+   Uses
+      At line 22 in file source\stringcmp.s
+Comment: start used once
+stringcmp 00000000
+
+Symbol: stringcmp
+   Definitions
+      At line 9 in file source\stringcmp.s
+   Uses
+      At line 7 in file source\stringcmp.s
+Comment: stringcmp used once
+4 symbols
+335 symbols in table

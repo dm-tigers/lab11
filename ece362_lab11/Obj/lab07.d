@@ -1,0 +1,10 @@
+.\obj\lab07.o: source\lab07.c
+.\obj\lab07.o: d:\Keil_v5\ARM\ARMCC\bin\..\include\stdio.h
+.\obj\lab07.o: .\include\LPC17xx.H
+.\obj\lab07.o: .\include\core_cm3.h
+.\obj\lab07.o: d:\Keil_v5\ARM\ARMCC\bin\..\include\stdint.h
+.\obj\lab07.o: .\include\core_cmInstr.h
+.\obj\lab07.o: .\include\core_cmFunc.h
+.\obj\lab07.o: .\include\system_LPC17xx.h
+.\obj\lab07.o: .\include\Serial.h
+.\obj\lab07.o: .\include\LED1.h

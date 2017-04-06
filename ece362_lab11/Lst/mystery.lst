@@ -1,0 +1,45 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             |.text|, CODE, READONLY
+    2 00000000         
+    3 00000000                 EXPORT           mystery
+    4 00000000         
+    5 00000000         mystery
+    6 00000000 B5F0            push             {r4-r7,lr}
+    7 00000002 F1A0 0141       SUB              r1, r0, #'A'
+    8 00000006 2919            CMP              r1, #'Z' - 'A'
+    9 00000008 BF98 3020       ADDLS            r0, r0, #'a' - 'A'
+   10 0000000C BDF0            pop              {r4-r7,pc}
+   11 0000000E                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\obj\my
+stery.d -o.\obj\mystery.o -IC:\Keil_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\PACK\ARM\C
+MSIS\3.20.4\CMSIS\Include -IC:\Keil_v5\ARM\Inc\NXP\LPC17xx --predefine="__EVAL 
+SETA 1" --list=.\lst\mystery.lst source\mystery.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 1 in file source\mystery.s
+   Uses
+      None
+Comment: .text unused
+mystery 00000000
+
+Symbol: mystery
+   Definitions
+      At line 5 in file source\mystery.s
+   Uses
+      At line 3 in file source\mystery.s
+Comment: mystery used once
+2 symbols
+333 symbols in table

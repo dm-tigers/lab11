@@ -1,0 +1,68 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; calculate the length of string
+    2 00000000         ; Args:  R0 = n = number of factorial to be calculated
+    3 00000000         ; Return: n!
+    4 00000000         
+    5 00000000                 AREA             |.text|, CODE, READONLY
+    6 00000000         
+    7 00000000                 EXPORT           factorial
+    8 00000000         
+    9 00000000         factorial
+   10 00000000 A402            ADR              R4, FTABLE
+   11 00000002 F854 5020       LDR              R5, [R4,R0, LSL #2]
+   12 00000006 4628            MOV              R0, R5
+   13 00000008 4770            BX               LR
+   14 0000000A 4770            BX               R14
+   15 0000000C         
+   16 0000000C         FTABLE
+   17 0000000C 00000001        DCD              1
+   18 00000010 00000001        DCD              1
+   19 00000014 00000002        DCD              2
+   20 00000018 00000006        DCD              6
+   21 0000001C 00000018        DCD              24
+   22 00000020 00000078        DCD              120
+   23 00000024 000002D0        DCD              720
+   24 00000028 000013B0        DCD              5040
+   25 0000002C                 ALIGN
+   26 0000002C                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\obj\fa
+ctorial.d -o.\obj\factorial.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Includ
+e -IC:\Keil\ARM\Inc\NXP\LPC17xx --predefine="__MICROLIB SETA 1" --list=.\lst\fa
+ctorial.lst factorial.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 5 in file factorial.s
+   Uses
+      None
+Comment: .text unused
+FTABLE 0000000C
+
+Symbol: FTABLE
+   Definitions
+      At line 16 in file factorial.s
+   Uses
+      At line 10 in file factorial.s
+Comment: FTABLE used once
+factorial 00000000
+
+Symbol: factorial
+   Definitions
+      At line 9 in file factorial.s
+   Uses
+      At line 7 in file factorial.s
+Comment: factorial used once
+3 symbols
+334 symbols in table

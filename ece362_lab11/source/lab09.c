@@ -60,15 +60,16 @@ int main (void)
 	SysTick_Config(SystemCoreClock/100);
 	while (1)
 	{         
-		//This block should return last value converted
-		//probably won't though
-		//while(!ADC_DONE); // wait for ADC to finish
+		while(!ADC_DONE); // wait for ADC to finish
+		ad_avg += ADC_GetCnv();
+		ad_avg_count++;
 		
 		//every 16 values get new value
 		if(ad_avg_count == 16)
 		{
 			ad_val_old = ad_val;
 			ad_val = ad_avg / ad_avg_count;
+			ad_avg_count = 0;
 		}//if
 		
 		/* 	

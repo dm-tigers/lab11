@@ -29,14 +29,14 @@ char text[10];
 extern uint8_t  clock_1s;
 
 #define __USE_LCD
-
+//#define ADC_DONE (LPC_ADC->ADGDR >> 31)
 
 /*----------------------------------------------------------------------------
   Main Program
  *----------------------------------------------------------------------------*/
 int main (void) {
   uint16_t ad_avg = 0, ad_avg_count = 0;
-  uint16_t ad_val = 0, ad_val_ = 0xFFFF;
+  uint16_t ad_val = 0, ad_val_old = 0xFFFF;
 
   LED1_Init();                                /* LED Initialization            */
   SER_Init();                                /* UART Initialization           */
@@ -57,30 +57,24 @@ int main (void) {
 #endif
 
 /* 9. Generate interrupt each 10 ms */																						
-
+	SysTick_Config(SystemCoreClock/100);
 
   while (1)
 		{                                
-
+			
 /* 10. AD converter input : For polling: store converted value through calling ADC_GetCnv()*/
+			ADC_StartCnv();
+			//while(!ADC_DONE); // wait for ADC to finish
+			AD_last = ADC_GetCnv();
+			ad_avg_count++;
+			
+			if(ad_avg_count == 16)
+			{
+				ad_val_old = ad_val;
+				ad_val = ad_avg / ad_avg_count;
+			}
+
 	
-
-/* 11. If Conversion has finished (Check AD flag)
-        Then Add ad_val for 16 samples to ad_avg variable and take average
-        			
-		
-		if (  ){                               
-           
-
-			                              
-			
-			
-		}
-		
-*/
-		
-		
-		
    //12.  Check if average value has changed from last time and then change average value (ad_val)
 	 
  
@@ -91,6 +85,6 @@ int main (void) {
       GLCD_Bargraph (144, 6*24, 176, 20, (ad_val >> 2)); // max bargraph is 10 bit
 #endif
    
-
-    }
-}
+		}
+    
+}//main

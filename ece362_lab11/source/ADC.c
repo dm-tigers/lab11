@@ -5,7 +5,7 @@ uint16_t AD_last;                            /* Last converted value          */
 uint8_t  done = 0;                        /* AD conversion done flag       */
 
 #define ADC_DONE (LPC_ADC->ADGDR >> 31)
-#define ADC_LAST (LPC_ADC->ADGDR >> 4);
+#define ADC_LAST (LPC_ADC->ADGDR >> 4) & 0xFFF;
 /*----------------------------------------------------------------------------
   Function that initializes ADC
  	
@@ -24,9 +24,9 @@ void ADC_Init (void) {
 /* ****  Part B:  Interrupt
 	 13. 	i) A/D global interrupt enable       
         ii)enable ADC Interrupt using NVIC function         
-
-	
 *****/
+	LPC_ADC->ADINTEN = (1 << 2);
+	NVIC_EnableIRQ(ADC_IRQn);
 	
 }
 
@@ -35,7 +35,7 @@ void ADC_Init (void) {
   4. start AD Conversion
  *----------------------------------------------------------------------------*/
 void ADC_StartCnv (void) {
-  LPC_ADC->ADCR |= 1;
+  LPC_ADC->ADCR |= (1 << 24);
 }
 
 
@@ -43,7 +43,7 @@ void ADC_StartCnv (void) {
   5. stop AD Conversion
  *----------------------------------------------------------------------------*/
 void ADC_StopCnv (void) {
-	LPC_ADC->ADCR |= 0;
+	LPC_ADC->ADCR &= ~(1 << 24); //set conversion bit to 0
   
 }
 
@@ -53,10 +53,10 @@ void ADC_StopCnv (void) {
  *----------------------------------------------------------------------------*/
 uint16_t ADC_GetCnv (void) {
 
-	while(!ADC_DONE);
-	AD_last = ADC_LAST;
-	done = 1;
-	return AD_last;
+	while(!ADC_DONE); //wait until conversion flag
+	AD_last = ADC_LAST; // store last value
+	done = 1; //set done flag to 1
+	return AD_last; //return last value
 																						/* Wait for Conversion end       */
                                             /* Store converted value  */
 																						// set AD conversion done flag to 1
@@ -72,9 +72,9 @@ uint16_t ADC_GetCnv (void) {
 
 void ADC_IRQHandler(void) {
 
-	while(!ADC_DONE);
-	AD_last = ADC_LAST;
-	done = 1;
+	//while(!ADC_DONE);
+	AD_last = ADC_LAST; //set value
+	done = 1; //done
 																					/* Store converted value   */
 																					// set AD conversion done flag to 1
   

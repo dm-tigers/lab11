@@ -61,11 +61,10 @@ int main (void) {
 
   while (1)
 		{                                
-			
-/* 10. AD converter input : For polling: store converted value through calling ADC_GetCnv()*/
 			ADC_StartCnv();
 			//while(!ADC_DONE); // wait for ADC to finish
 			AD_last = ADC_GetCnv();
+			ADC_StopCnv();
 			ad_avg_count++;
 			
 			if(ad_avg_count == 16)
@@ -74,8 +73,6 @@ int main (void) {
 				ad_val = ad_avg / ad_avg_count;
 			}
 
-	
-   //12.  Check if average value has changed from last time and then change average value (ad_val)
 	 
  
 	sprintf(text, "0x%04X", ad_val);       // format text for print out     

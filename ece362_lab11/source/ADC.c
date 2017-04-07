@@ -12,14 +12,16 @@ uint8_t  done = 0;                        /* AD conversion done flag       */
  *----------------------------------------------------------------------------*/
 void ADC_Init (void) {
 /* 1. enable power to ADC & IOCON   */																								
-	 LPC_SC->PCONP |= (1 << 12);
+	LPC_SC->PCONP |= (1 << 12);
+	LPC_SC->PCONP |= (1 <<15);
+		
 	
 /* 2. P0.25 is AD0.2 & no pull up/down   */
 	LPC_PINCON->PINSEL1 |= (1 << 18);
 	LPC_PINCON->PINMODE1 |= (0x2 << 18);
 	
 /* 3. select AD0.2 pin ,   ADC clock is 25MHz &  enable ADC          */
-		LPC_ADC->ADCR= (0x10304);
+		LPC_ADC->ADCR = 	(1 << 2) | (4 << 8) | (1 << 21);
 	
 /* ****  Part B:  Interrupt
 	 13. 	i) A/D global interrupt enable       

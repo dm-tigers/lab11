@@ -62,11 +62,7 @@ int main (void)
 	{         
 		//This block should return last value converted
 		//probably won't though
-		ADC_StartCnv();
 		//while(!ADC_DONE); // wait for ADC to finish
-		AD_last = ADC_GetCnv();
-		ADC_StopCnv();
-		ad_avg_count++;
 		
 		//every 16 values get new value
 		if(ad_avg_count == 16)

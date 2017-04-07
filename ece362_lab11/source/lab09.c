@@ -34,54 +34,58 @@ extern uint8_t  clock_1s;
 /*----------------------------------------------------------------------------
   Main Program
  *----------------------------------------------------------------------------*/
-int main (void) {
-  uint16_t ad_avg = 0, ad_avg_count = 0;
-  uint16_t ad_val = 0, ad_val_old = 0xFFFF;
+int main (void) 
+{
+  	uint16_t ad_avg = 0, ad_avg_count = 0;
+  	uint16_t ad_val = 0, ad_val_old = 0xFFFF;
 
-  LED1_Init();                                /* LED Initialization            */
-  SER_Init();                                /* UART Initialization           */
-  ADC_Init();                                /* ADC Initialization            */
+	LED1_Init();                                /* LED Initialization            */
+  	SER_Init();                                /* UART Initialization           */
+  	ADC_Init();                                /* ADC Initialization            */
 
 #ifdef __USE_LCD
-  GLCD_Init();                               /* Initialize graphical LCD      */
-
-  GLCD_Clear(White);                         /* Clear graphical LCD display   */
-  GLCD_SetBackColor(Blue);
-  GLCD_SetTextColor(White);
-  GLCD_DisplayString(0, 0, __FI, "    MCB1700 Demo    ");
-  GLCD_DisplayString(1, 0, __FI, "       Blinky       ");
-  GLCD_DisplayString(2, 0, __FI, "    www.keil.com    ");
-  GLCD_SetBackColor(White);
-  GLCD_SetTextColor(Blue);
-  GLCD_DisplayString(5, 0, __FI, "AD value:            ");
+	GLCD_Init();                               /* Initialize graphical LCD      */
+  	GLCD_Clear(White);                         /* Clear graphical LCD display   */
+  	GLCD_SetBackColor(Blue);
+  	GLCD_SetTextColor(White);
+  	GLCD_DisplayString(0, 0, __FI, "    MCB1700 Demo    ");
+  	GLCD_DisplayString(1, 0, __FI, "       Blinky       ");
+  	GLCD_DisplayString(2, 0, __FI, "    www.keil.com    ");
+  	GLCD_SetBackColor(White);
+  	GLCD_SetTextColor(Blue);
+  	GLCD_DisplayString(5, 0, __FI, "AD value:            ");
 #endif
 
 /* 9. Generate interrupt each 10 ms */																						
 	SysTick_Config(SystemCoreClock/100);
-
-  while (1)
-		{                                
-			ADC_StartCnv();
-			//while(!ADC_DONE); // wait for ADC to finish
-			AD_last = ADC_GetCnv();
-			ADC_StopCnv();
-			ad_avg_count++;
-			
-			if(ad_avg_count == 16)
-			{
-				ad_val_old = ad_val;
-				ad_val = ad_avg / ad_avg_count;
-			}
-
-	 
- 
+	while (1)
+	{         
+		//This block should return last value converted
+		//probably won't though
+		ADC_StartCnv();
+		//while(!ADC_DONE); // wait for ADC to finish
+		AD_last = ADC_GetCnv();
+		ADC_StopCnv();
+		ad_avg_count++;
+		
+		//every 16 values get new value
+		if(ad_avg_count == 16)
+		{
+			ad_val_old = ad_val;
+			ad_val = ad_avg / ad_avg_count;
+		}//if
+		
+		/* 	
+			TODO
+			Only change value if the average is different.
+			Maybe just skip?
+		*/
+		
 	sprintf(text, "0x%04X", ad_val);       // format text for print out     
 #ifdef __USE_LCD
-      GLCD_SetTextColor(Red);
-      GLCD_DisplayString(5,  9, __FI,  (unsigned char *)text);
-      GLCD_Bargraph (144, 6*24, 176, 20, (ad_val >> 2)); // max bargraph is 10 bit
-#endif
-   
-		}
-    
+	GLCD_SetTextColor(Red);
+    GLCD_DisplayString(5,  9, __FI,  (unsigned char *)text);
+    GLCD_Bargraph (144, 6*24, 176, 20, (ad_val >> 2)); // max bargraph is 10 bit
+#endif   
+	}//while
 }//main
